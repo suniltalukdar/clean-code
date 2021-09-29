@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 public class GildedRoseADefaultItemTest {
+	private static final String DEFAULT_ITEM = "DEFAULT_ITEM";
+
 	/**
 	 * Method to test the variation in quality of the item for the non expired
 	 * Item.
@@ -14,14 +16,24 @@ public class GildedRoseADefaultItemTest {
 	 * 
 	 */
 	@Test
-	public void testUpdateQualityDefault1() {
-		Item item = new Item("DEFAULT_ITEM", 15, 3);
+	public void test_updateQuality_nonExpiredItem_defaultScenario() {
+		int sellIn = 15;
+		int quality = 3;
+		int qualityFactor = 1;
+		int sellInFactor = 1;
+		GildedRose app = getGildedRoseDefaultScenario(sellIn, quality);
+		
+		app.updateQuality();
+		
+		Item item = app.items[0];
+		verifyUpdateQuality(sellIn, quality, item, qualityFactor, sellInFactor);
+	}
+
+	private GildedRose getGildedRoseDefaultScenario(int sellIn, int quality) {
+		Item item = new Item(DEFAULT_ITEM, sellIn, quality);
 		Item[] items = new Item[] { item };
 		GildedRose app = new GildedRose(items);
-		app.updateQuality();
-		assertEquals("DEFAULT_ITEM", app.items[0].name);
-		assertEquals(14, app.items[0].sellIn);
-		assertEquals(2, app.items[0].quality);
+		return app;
 	}
 
 	/**
@@ -33,12 +45,29 @@ public class GildedRoseADefaultItemTest {
 	 */
 	@Test
 	public void testUpdateQualityForExpiredItem() {
-		Item item = new Item("DEFAULT_ITEM", -1, 3);
+		int sellIn = -1;
+		int quality = 3;
+		int qualityFactor = 2;
+		int sellInFactor = 1;
+		GildedRose app = getGildedRoseExpiredItem(sellIn, quality);
+		
+		app.updateQuality();
+		
+		Item item = app.items[0];
+		verifyUpdateQuality(sellIn, quality, item, qualityFactor, sellInFactor);
+	}
+
+	private GildedRose getGildedRoseExpiredItem(int sellIn, int quality) {
+		Item item = new Item(DEFAULT_ITEM, sellIn, quality);
 		Item[] items = new Item[] { item };
 		GildedRose app = new GildedRose(items);
-		app.updateQuality();
-		assertEquals("DEFAULT_ITEM", app.items[0].name);
-		assertEquals(-2, app.items[0].sellIn);
-		assertEquals(1, app.items[0].quality);
+		return app;
+	}
+	
+
+	private void verifyUpdateQuality(int sellIn, int quality, Item item, int qualityFactor, int sellInFactor) {
+		assertEquals(DEFAULT_ITEM, item.name);
+		assertEquals(sellIn-sellInFactor, item.sellIn);
+		assertEquals(quality-qualityFactor, item.quality);
 	}
 }
