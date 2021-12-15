@@ -12,7 +12,7 @@ public class TextHelper {
 		
 		return str;
 	}
-
+	//After stashing
 	private String swap(String str, int firstIndex, int secondIndex) {
 		char[] temp = str.toCharArray();
 		
