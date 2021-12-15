@@ -23,7 +23,10 @@ class GildedRose {
 		System.out.println(app);
 
 	}
-
+	
+	/***
+	 * I need to this things.
+	 */
 	public void updateQuality() {
 		for (int i = 0; i < items.length; i++) {
 			if (items[i].name != "Aged Brie" && items[i].name != "Backstage passes to a TAFKAL80ETC concert") {
