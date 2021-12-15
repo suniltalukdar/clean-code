@@ -25,7 +25,7 @@ class GildedRose {
 	}
 	
 	/***
-	 * I need to this things.
+	 * I need to this things..
 	 */
 	public void updateQuality() {
 		for (int i = 0; i < items.length; i++) {
